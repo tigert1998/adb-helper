@@ -32,6 +32,10 @@ class Android:
     def __init__(self, adb: Adb) -> None:
         self.adb = adb
 
+    def boolean(self, s) -> bool:
+        num = self.adb.shell(f"if [ {s} ]; then echo 1; else echo 0; fi")
+        return int(num) == 1
+
     def query_battery(self):
         s = self.adb.shell("dumpsys battery")
         ans = s.split('\n')
