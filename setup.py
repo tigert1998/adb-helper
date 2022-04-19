@@ -14,7 +14,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/tigert1998/adb-helper",
-    packages=["adb-helper"],
+    packages=["adb_helper"],
     license='MIT',
     classifiers=[
         "Programming Language :: Python :: 3",
