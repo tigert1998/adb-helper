@@ -6,21 +6,22 @@ import datetime
 
 
 class Adb:
-    def __init__(self, adb_device_id: str, su: bool):
+    def __init__(self, adb_device_id: str, su: bool, adb_path="adb"):
         self.adb_device_id = adb_device_id
         self.su = su
+        self.adb_path = adb_path
 
     def push(self, local_path: str, remote_path: str):
-        assert 0 == os.system("adb -s {} push {} {}".format(
-            self.adb_device_id, local_path, remote_path))
+        assert 0 == os.system("{} -s {} push {} {}".format(
+            self.adb_path, self.adb_device_id, local_path, remote_path))
 
     def pull(self, remote_path: str, local_path: str):
-        assert 0 == os.system("adb -s {} pull {} {}".format(
-            self.adb_device_id, remote_path, local_path))
+        assert 0 == os.system("{} -s {} pull {} {}".format(
+            self.adb_path, self.adb_device_id, remote_path, local_path))
 
     def shell(self, shell: str):
         p = subprocess.Popen(
-            ["adb", "-s", self.adb_device_id, "shell", "su" if self.su else ""],
+            [self.adb_path, "-s", self.adb_device_id, "shell", "su" if self.su else ""],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
